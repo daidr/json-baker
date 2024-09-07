@@ -1,3 +1,4 @@
+import fs from 'node:fs/promises'
 import {
   defineConfig,
   presetIcons,
@@ -15,7 +16,14 @@ export default defineConfig({
   },
   presets: [
     presetUno(),
-    presetIcons(),
+    presetIcons({
+      collections: {
+        mingcute: () => import('@iconify-json/mingcute/icons.json').then(i => i.default),
+        custom: {
+          'json-baker': () => fs.readFile('./design/logo-compressed.svg', 'utf-8'),
+        },
+      },
+    }),
   ],
   transformers: [
     transformerDirectives(),
